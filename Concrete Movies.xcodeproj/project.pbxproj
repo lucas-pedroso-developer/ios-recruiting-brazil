@@ -14,6 +14,8 @@
 		6A476AAE2533A51D00B6FD16 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6A476AAD2533A51D00B6FD16 /* Alamofire */; };
 		6A476AB32533A56300B6FD16 /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A476AB22533A56300B6FD16 /* HttpService.swift */; };
 		6A476AB82533A5CA00B6FD16 /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A476AB72533A5CA00B6FD16 /* HttpError.swift */; };
+		6A476ABD2533A63B00B6FD16 /* UrlProtocolStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A476ABC2533A63B00B6FD16 /* UrlProtocolStub.swift */; };
+		6A476AC52533A66500B6FD16 /* TestFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A476AC42533A66500B6FD16 /* TestFactories.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		6A476A9E2533A3CD00B6FD16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A476AB22533A56300B6FD16 /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
 		6A476AB72533A5CA00B6FD16 /* HttpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpError.swift; sourceTree = "<group>"; };
+		6A476ABC2533A63B00B6FD16 /* UrlProtocolStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlProtocolStub.swift; sourceTree = "<group>"; };
+		6A476AC42533A66500B6FD16 /* TestFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFactories.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				6A476A9C2533A3CD00B6FD16 /* InfraTests.swift */,
+				6A476ABC2533A63B00B6FD16 /* UrlProtocolStub.swift */,
+				6A476AC42533A66500B6FD16 /* TestFactories.swift */,
 				6A476A9E2533A3CD00B6FD16 /* Info.plist */,
 			);
 			path = InfraTests;
@@ -286,7 +292,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A476AC52533A66500B6FD16 /* TestFactories.swift in Sources */,
 				6A476A9D2533A3CD00B6FD16 /* InfraTests.swift in Sources */,
+				6A476ABD2533A63B00B6FD16 /* UrlProtocolStub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
