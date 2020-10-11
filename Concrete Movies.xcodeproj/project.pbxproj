@@ -18,7 +18,11 @@
 		6A476AC52533A66500B6FD16 /* TestFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A476AC42533A66500B6FD16 /* TestFactories.swift */; };
 		6A7D2B152533B48700CF408A /* ViewModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A7D2B0C2533B48600CF408A /* ViewModel.framework */; };
 		6A7D2B1A2533B48700CF408A /* ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D2B192533B48700CF408A /* ViewModelTests.swift */; };
-		6A7D2B1C2533B48700CF408A /* ViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A7D2B0E2533B48600CF408A /* ViewModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6A7D2B3A2533B56400CF408A /* MoviesMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D2B392533B56400CF408A /* MoviesMainViewModel.swift */; };
+		6A7D2B412533B5FA00CF408A /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A476A6D253396A400B6FD16 /* Model.framework */; };
+		6A7D2B422533B5FA00CF408A /* Model.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6A476A6D253396A400B6FD16 /* Model.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6A7D2B4C2533B8DB00CF408A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6A7D2B4B2533B8DB00CF408A /* RxSwift */; };
+		6A7D2B4E2533B8DB00CF408A /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 6A7D2B4D2533B8DB00CF408A /* RxCocoa */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +40,28 @@
 			remoteGlobalIDString = 6A7D2B0B2533B48600CF408A;
 			remoteInfo = ViewModel;
 		};
+		6A7D2B432533B5FA00CF408A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A621E712311CBE300F644BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A476A6C253396A400B6FD16;
+			remoteInfo = Model;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6A7D2B452533B5FA00CF408A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6A7D2B422533B5FA00CF408A /* Model.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6A476A6D253396A400B6FD16 /* Model.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Model.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,11 +78,11 @@
 		6A476ABC2533A63B00B6FD16 /* UrlProtocolStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlProtocolStub.swift; sourceTree = "<group>"; };
 		6A476AC42533A66500B6FD16 /* TestFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFactories.swift; sourceTree = "<group>"; };
 		6A7D2B0C2533B48600CF408A /* ViewModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ViewModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A7D2B0E2533B48600CF408A /* ViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewModel.h; sourceTree = "<group>"; };
 		6A7D2B0F2533B48600CF408A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A7D2B142533B48700CF408A /* ViewModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ViewModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A7D2B192533B48700CF408A /* ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTests.swift; sourceTree = "<group>"; };
 		6A7D2B1B2533B48700CF408A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A7D2B392533B56400CF408A /* MoviesMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesMainViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +97,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A7D2B4E2533B8DB00CF408A /* RxCocoa in Frameworks */,
+				6A7D2B4C2533B8DB00CF408A /* RxSwift in Frameworks */,
 				6A476AAE2533A51D00B6FD16 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A7D2B412533B5FA00CF408A /* Model.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,8 +133,7 @@
 		6A476A6E253396A400B6FD16 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6A476A8125339BE500B6FD16 /* MoviesMain.swift */,
-				6A476A8425339C6100B6FD16 /* MoviesResult.swift */,
+				6A7D2B322533B54300CF408A /* Main */,
 				6A476A70253396A400B6FD16 /* Info.plist */,
 			);
 			path = Model;
@@ -142,6 +169,7 @@
 				6A7D2B0D2533B48600CF408A /* ViewModel */,
 				6A7D2B182533B48700CF408A /* ViewModelTests */,
 				6A621E7A2311CBE300F644BD /* Products */,
+				6A7D2B402533B5FA00CF408A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,7 +188,7 @@
 		6A7D2B0D2533B48600CF408A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				6A7D2B0E2533B48600CF408A /* ViewModel.h */,
+				6A7D2B382533B55000CF408A /* Main */,
 				6A7D2B0F2533B48600CF408A /* Info.plist */,
 			);
 			path = ViewModel;
@@ -173,6 +201,30 @@
 				6A7D2B1B2533B48700CF408A /* Info.plist */,
 			);
 			path = ViewModelTests;
+			sourceTree = "<group>";
+		};
+		6A7D2B322533B54300CF408A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				6A476A8125339BE500B6FD16 /* MoviesMain.swift */,
+				6A476A8425339C6100B6FD16 /* MoviesResult.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		6A7D2B382533B55000CF408A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				6A7D2B392533B56400CF408A /* MoviesMainViewModel.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		6A7D2B402533B5FA00CF408A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,7 +248,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A7D2B1C2533B48700CF408A /* ViewModel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +288,8 @@
 			name = Infra;
 			packageProductDependencies = (
 				6A476AAD2533A51D00B6FD16 /* Alamofire */,
+				6A7D2B4B2533B8DB00CF408A /* RxSwift */,
+				6A7D2B4D2533B8DB00CF408A /* RxCocoa */,
 			);
 			productName = Infra;
 			productReference = 6A476A8F2533A3CD00B6FD16 /* Infra.framework */;
@@ -268,10 +321,12 @@
 				6A7D2B082533B48600CF408A /* Sources */,
 				6A7D2B092533B48600CF408A /* Frameworks */,
 				6A7D2B0A2533B48600CF408A /* Resources */,
+				6A7D2B452533B5FA00CF408A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6A7D2B442533B5FA00CF408A /* PBXTargetDependency */,
 			);
 			name = ViewModel;
 			productName = ViewModel;
@@ -319,6 +374,7 @@
 					};
 					6A7D2B0B2533B48600CF408A = {
 						CreatedOnToolsVersion = 12.0.1;
+						LastSwiftMigration = 1200;
 					};
 					6A7D2B132533B48700CF408A = {
 						CreatedOnToolsVersion = 12.0.1;
@@ -336,6 +392,7 @@
 			mainGroup = 6A621E702311CBE300F644BD;
 			packageReferences = (
 				6A476AAC2533A51D00B6FD16 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				6A7D2B4A2533B8DB00CF408A /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 6A621E7A2311CBE300F644BD /* Products */;
 			projectDirPath = "";
@@ -421,6 +478,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A7D2B3A2533B56400CF408A /* MoviesMainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +502,11 @@
 			isa = PBXTargetDependency;
 			target = 6A7D2B0B2533B48600CF408A /* ViewModel */;
 			targetProxy = 6A7D2B162533B48700CF408A /* PBXContainerItemProxy */;
+		};
+		6A7D2B442533B5FA00CF408A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6A476A6C253396A400B6FD16 /* Model */;
+			targetProxy = 6A7D2B432533B5FA00CF408A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -731,6 +794,7 @@
 		6A7D2B1D2533B48700CF408A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -750,6 +814,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lucas.app.ViewModel;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -760,6 +825,7 @@
 		6A7D2B1E2533B48700CF408A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -789,6 +855,7 @@
 		6A7D2B1F2533B48700CF408A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5KRGYLJC7Z;
@@ -809,6 +876,7 @@
 		6A7D2B202533B48700CF408A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5KRGYLJC7Z;
@@ -894,6 +962,14 @@
 				minimumVersion = 5.2.2;
 			};
 		};
+		6A7D2B4A2533B8DB00CF408A /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -901,6 +977,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6A476AAC2533A51D00B6FD16 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		6A7D2B4B2533B8DB00CF408A /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6A7D2B4A2533B8DB00CF408A /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		6A7D2B4D2533B8DB00CF408A /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6A7D2B4A2533B8DB00CF408A /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
