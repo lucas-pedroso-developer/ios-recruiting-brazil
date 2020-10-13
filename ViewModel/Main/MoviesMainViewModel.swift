@@ -4,7 +4,7 @@ import Infra
 import UIKit
 import RxSwift
 
-public class PokemonsViewModel {
+public class MoviesViewModel {
         
     public var moviesMain: MoviesMain?
     public var resultsArray: [MoviesResult]?
@@ -48,8 +48,7 @@ public class PokemonsViewModel {
                         do {
                             let results = try JSONDecoder().decode(MoviesMain.self, from: data!)
                             self.moviesBase = results
-                            observer.onNext(.success(self.moviesBase))
-                            
+                            observer.onNext(.success(self.moviesBase))                            
                         } catch(let error) {
                             observer.onNext(.failure(.noConnectivity))
                         }
