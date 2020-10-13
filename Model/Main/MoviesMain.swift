@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MoviesMain : Codable {
+public struct MoviesMain: Model {
     public let page : Int?
     public let total_results : Int?
     public let total_pages : Int?

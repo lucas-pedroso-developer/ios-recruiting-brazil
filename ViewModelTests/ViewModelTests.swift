@@ -1,34 +1,64 @@
-//
-//  ViewModelTests.swift
-//  ViewModelTests
-//
-//  Created by Lucas Daniel on 11/10/20.
-//  Copyright © 2020 Lucas. All rights reserved.
-//
-
 import XCTest
+import Foundation
+import Model
+import Infra
 @testable import ViewModel
 
 class ViewModelTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func test_get_should_call_viewModel_with_correct_url() {
+        let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=60471ecf5f288a61c69c6592c9d9e1cf")!
+        let sut = makeSut()
+        sut.getMovies(url: url) { _ in }
+        XCTAssertEqual(sut.urls, [url])
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func test_add_should_complete_with_account_if_client_completes_with_error() {
+        let sut = makeSut()
+        expect(sut, completeWith: .failure(.noConnectivity), when: {
+            sut.completeWithError(.noConnectivity)
+        })
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+            
+    func makeMovie() -> MoviesMain {
+        return MoviesMain(page: 0, total_results: 0, total_pages: 0, results: [])
     }
+        
+    func makeHttpResponse(statusCode: Int = 200) -> HTTPURLResponse {
+       return HTTPURLResponse(url: makeURL(), statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+    }
+    
+    func test_add_should_complete_with_account_if_client_completes_with_valid_data() {
+        let sut = makeSut()
+        expect(sut, completeWith: .success(makeMovie()) , when: {
+            sut.completeWithData(makeMovie())
+        })
+    }
+}
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+extension ViewModelTests {
+    func makeSut() -> MoviesMainViewModelSpy {
+        let sut = MoviesMainViewModelSpy()
+        sut.resultsArray = []
+        return sut
+    }
+            
+    func makeURL() -> URL {
+        return URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=60471ecf5f288a61c69c6592c9d9e1cf")!
+    }
+    
+    func expect(_ sut: MoviesMainViewModelSpy, completeWith expectedResult: Result<MoviesMain, HttpError>, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "waiting")
+        
+        sut.getMovies(url: makeURL()) { receivedResult in
+            switch (expectedResult, receivedResult) {
+                case (.failure(let expectedError), .failure(let receivedError)): XCTAssertEqual(expectedError, receivedError, file: file, line: line)
+                case (.success(let expectedAccount), .success(let receivedAccount)): XCTAssertEqual(expectedAccount, receivedAccount)
+                default: XCTFail("Expected \(expectedResult) received \(receivedResult) instead")
+            }
+            exp.fulfill()
         }
+        action()
+        wait(for: [exp], timeout: 1)
     }
-
 }

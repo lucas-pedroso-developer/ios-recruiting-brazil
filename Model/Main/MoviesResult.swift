@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MoviesResult : Codable {
+public struct MoviesResult: Model {
     public let popularity: Double?
     public let vote_count: Int?
     public let video: Bool?

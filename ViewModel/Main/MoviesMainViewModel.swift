@@ -17,7 +17,7 @@ public class MoviesViewModel {
     public func numberOfRows(searchIsActive: Bool) -> Int {
         if searchIsActive {
             var moviesFiltered = self.moviesMain?.results!.filter {
-                ($0.name?.contains(self.movieToSearch))!
+                ($0.title?.contains(self.movieToSearch))!
             }
                                                 
             if let filtered = moviesFiltered {
@@ -25,7 +25,7 @@ public class MoviesViewModel {
                 return filtered.count
             }
         } else {
-            if let array = moviesBase?.results {
+            if let array = moviesMain?.results {
                 return array.count
             }
         }
@@ -47,8 +47,8 @@ public class MoviesViewModel {
                     if data != nil {
                         do {
                             let results = try JSONDecoder().decode(MoviesMain.self, from: data!)
-                            self.moviesBase = results
-                            observer.onNext(.success(self.moviesBase))                            
+                            self.moviesMain = results
+                            observer.onNext(.success(self.moviesMain))                            
                         } catch(let error) {
                             observer.onNext(.failure(.noConnectivity))
                         }

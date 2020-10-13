@@ -4,7 +4,7 @@ import Infra
 
 public class MoviesMainViewModelSpy {
     public var moviesMain: MoviesMain?
-    public var resultsArray: [MoviesResults]?
+    public var resultsArray: [MoviesResult]?
     
     public var urls = [URL]()
     var data: Data?
