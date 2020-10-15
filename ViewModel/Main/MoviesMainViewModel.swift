@@ -4,7 +4,7 @@ import Infra
 import UIKit
 import RxSwift
 
-public class MoviesViewModel {
+public class MoviesMainViewModel {
         
     public var moviesMain: MoviesMain?
     public var resultsArray: [MoviesResult]?
