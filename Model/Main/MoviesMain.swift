@@ -1,10 +1,10 @@
 import Foundation
 
 public struct MoviesMain: Model {
-    public let page : Int?
-    public let total_results : Int?
-    public let total_pages : Int?
-    public let results : [MoviesResult]?
+    public var page : Int?
+    public var total_results : Int?
+    public var total_pages : Int?
+    public var results : [MoviesResult]?
             
     public init (page: Int?, total_results : Int?, total_pages : Int?, results : [MoviesResult]?) {
         self.page = page

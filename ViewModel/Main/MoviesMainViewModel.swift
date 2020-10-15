@@ -38,6 +38,19 @@ public class MoviesMainViewModel {
         return CGSize(width: collectionViewSize/3, height: collectionViewSize/3)
     }
     
+    /*do {
+        let results = try JSONDecoder().decode(Pokemons.self, from: data!)
+        if self.pokemons == nil {
+            self.pokemons = results
+            observer.onNext(.success(self.pokemons))
+        } else {
+            self.pokemons?.next = results.next
+            self.pokemons?.results?.append(contentsOf: results.results!)
+            observer.onNext(.success(self.pokemons))
+        }
+    } catch(let error) {
+        observer.onNext(.failure(.noConnectivity))
+    }*/
     
     public func get(url: URL) -> Observable<(Result<MoviesMain?, HttpError>)> {
         return Observable.create { observer in
@@ -47,8 +60,13 @@ public class MoviesMainViewModel {
                     if data != nil {
                         do {
                             let results = try JSONDecoder().decode(MoviesMain.self, from: data!)
-                            self.moviesMain = results
-                            observer.onNext(.success(self.moviesMain))                            
+                            if self.moviesMain == nil {
+                                self.moviesMain = results
+                                observer.onNext(.success(self.moviesMain))
+                            } else {
+                                self.moviesMain?.results?.append(contentsOf: results.results!)
+                                observer.onNext(.success(self.moviesMain))
+                            }
                         } catch(let error) {
                             observer.onNext(.failure(.noConnectivity))
                         }
