@@ -37,21 +37,7 @@ public class MoviesMainViewModel {
         let collectionViewSize = collectionView.frame.size.width - padding
         return CGSize(width: collectionViewSize/3, height: collectionViewSize/3)
     }
-    
-    /*do {
-        let results = try JSONDecoder().decode(Pokemons.self, from: data!)
-        if self.pokemons == nil {
-            self.pokemons = results
-            observer.onNext(.success(self.pokemons))
-        } else {
-            self.pokemons?.next = results.next
-            self.pokemons?.results?.append(contentsOf: results.results!)
-            observer.onNext(.success(self.pokemons))
-        }
-    } catch(let error) {
-        observer.onNext(.failure(.noConnectivity))
-    }*/
-    
+        
     public func get(url: URL) -> Observable<(Result<MoviesMain?, HttpError>)> {
         return Observable.create { observer in
             self.service.get(url: url) { result in
@@ -80,5 +66,5 @@ public class MoviesMainViewModel {
             return Disposables.create()
         }
     }
- 
+     
 }

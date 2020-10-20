@@ -1,8 +1,8 @@
 import Foundation
 import UIKit
 
- class MoviesCollectionViewCell: UICollectionViewCell {
+class MoviesCollectionViewCell: UICollectionViewCell {
      @IBOutlet weak var image: UIImageView!
      @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var backgroundCellView: UIView!
- }
+     @IBOutlet weak var backgroundCellView: UIView!
+}
