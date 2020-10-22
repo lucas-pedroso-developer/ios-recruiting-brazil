@@ -76,8 +76,8 @@
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="wEg-tk-8g3" id="9Dw-mT-zZw"/>
-                                    <outlet property="delegate" destination="wEg-tk-8g3" id="6L9-Ba-Jls"/>
+                                    <outlet property="dataSource" destination="wEg-tk-8g3" id="haG-PK-aAO"/>
+                                    <outlet property="delegate" destination="wEg-tk-8g3" id="5zh-EF-aCe"/>
                                 </connections>
                             </collectionView>
                             <navigationBar contentMode="scaleToFill" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3of-4L-vzw">

@@ -11,16 +11,13 @@ class MainMoviesViewController: UIViewController, UICollectionViewDataSource, UI
     var categoriesViewModel = CategoriesViewModel()
     var moviesArrayFiltered: [[String:String]] = []
     var disposeBag = DisposeBag()
-    var genresList: [String] = []
-    
+    var genresList: [String] = []    
     var isFinalToLoad : Bool = false
         
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var categoriesCollectionView: UICollectionView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
-    
     @IBOutlet weak var gradientView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -123,22 +120,13 @@ class MainMoviesViewController: UIViewController, UICollectionViewDataSource, UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MoviesCollectionViewCell
         if collectionView.tag == 1 {
             cell.label.text = self.mainMoviesViewModel.moviesMain?.results![indexPath.item].title!
-            
             if let url = self.mainMoviesViewModel.moviesMain?.results![indexPath.item].backdrop_path {
                 cell.image.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500" + url))
             }
-            
-            //cell.backgroundCellView.layer.cornerRadius = UIScreen.main.bounds.width*3/100
             cell.image.layer.cornerRadius = UIScreen.main.bounds.width*3/100
-            /*cell.backgroundCellView.layer.borderColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
-                cell.backgroundCellView.layer.borderWidth = 1
-                cell.backgroundCellView.layer.cornerRadius = 8*/
         } else if collectionView.tag == 2 {
             cell.label.text = self.categoriesViewModel.categories?.genres![indexPath.item].name!
             cell.backgroundCellView.layer.cornerRadius = UIScreen.main.bounds.width*4/100
-            //cell.image.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500" + url))
-            /*let resource: Resource? = nil
-            cell.image.kf.setImage(with: resource) // inform kingfisher that you are assigning this image by your own*/
             cell.image.image = UIImage(named: self.genresList[indexPath.item])
         }
         return cell
@@ -156,10 +144,13 @@ class MainMoviesViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Movies", bundle: nil)
-        let newViewController = storyboard.instantiateViewController(withIdentifier: "MoviesViewController") as! MoviesViewController
-        //newViewController.movieID = (self.moviesBase?.results?[indexPath.row].id!)!
-        present(newViewController, animated: true, completion: nil)
+        if collectionView.tag == 2 {
+            let storyboard = UIStoryboard(name: "Movies", bundle: nil)
+            let newViewController = storyboard.instantiateViewController(withIdentifier: "MoviesViewController") as! MoviesViewController
+            newViewController.type = genresList[indexPath.row]
+            newViewController.genreId = (self.categoriesViewModel.categories?.genres![indexPath.item].id!)!
+            present(newViewController, animated: true, completion: nil)
+        }
         
     }
     

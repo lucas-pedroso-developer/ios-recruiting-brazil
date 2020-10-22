@@ -46,6 +46,7 @@ public class MoviesMainViewModel {
                     if data != nil {
                         do {
                             let results = try JSONDecoder().decode(MoviesMain.self, from: data!)
+                            print(results)
                             if self.moviesMain == nil {
                                 self.moviesMain = results
                                 observer.onNext(.success(self.moviesMain))
