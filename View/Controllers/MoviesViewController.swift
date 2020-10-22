@@ -19,6 +19,11 @@ class MoviesViewController: UIViewController {
     var type: String = ""
     var genreId: Int = 0
     
+    var nowPlayingPage: Int = 1
+    var popularPage: Int = 1
+    var topRatedPage: Int = 1
+    var upcomingPage: Int = 1
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     
@@ -33,13 +38,13 @@ class MoviesViewController: UIViewController {
             "Lançamentos"
         ]
         
-        self.getNowPlayingMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)")!)
+        self.getNowPlayingMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.nowPlayingPage)")!)
     }
     
     func getNowPlayingMoviesViewModel(url: URL) {
         self.nowPlayingMoviesViewModel.get(url: url).subscribe(
             onNext: { result in
-                self.getPopularMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)")!)
+                self.getPopularMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.popularPage)")!)
             },
             onError: { error in
                 //self.showAlert(title: "Erro", message: "Ocorreu o seguinte erro - \(error.localizedDescription) ")
@@ -52,7 +57,7 @@ class MoviesViewController: UIViewController {
     func getPopularMoviesViewModel(url: URL) {
         self.popularMoviesViewModel.get(url: url).subscribe(
             onNext: { result in
-                self.getTopRatedMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)")!)
+                self.getTopRatedMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.topRatedPage)")!)
             },
             onError: { error in
                 //self.showAlert(title: "Erro", message: "Ocorreu o seguinte erro - \(error.localizedDescription) ")
@@ -66,7 +71,7 @@ class MoviesViewController: UIViewController {
     func getTopRatedMoviesViewModel(url: URL) {
         self.topRatedMoviesViewModel.get(url: url).subscribe(
             onNext: { result in
-                self.getUpcomingMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)")!)
+                self.getUpcomingMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.upcomingPage)")!)
             },
             onError: { error in
                 //self.showAlert(title: "Erro", message: "Ocorreu o seguinte erro - \(error.localizedDescription) ")
@@ -180,6 +185,41 @@ extension MoviesViewController: UICollectionViewDataSource, UICollectionViewDele
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView.tag == 0 {
+            if indexPath.item == (self.nowPlayingMoviesViewModel.moviesMain?.results!.count)! - 4 {
+                if ((self.nowPlayingMoviesViewModel.moviesMain?.page)! <= (self.nowPlayingMoviesViewModel.moviesMain?.total_pages)!) {
+                    self.nowPlayingPage = self.nowPlayingPage + 1
+                    self.getNowPlayingMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.nowPlayingPage)")!)
+                }
+            }
+        } else if collectionView.tag == 1 {
+            if indexPath.item == (self.popularMoviesViewModel.moviesMain?.results!.count)! - 4 {
+                if ((self.popularMoviesViewModel.moviesMain?.page)! <= (self.popularMoviesViewModel.moviesMain?.total_pages)!) {
+                    self.popularPage = self.popularPage + 1
+                    self.getPopularMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.popularPage)")!)
+                }
+            }
+        } else if collectionView.tag == 2 {
+            if indexPath.item == (self.topRatedMoviesViewModel.moviesMain?.results!.count)! - 4 {
+                if ((self.topRatedMoviesViewModel.moviesMain?.page)! <= (self.topRatedMoviesViewModel.moviesMain?.total_pages)!) {
+                    self.topRatedPage = self.topRatedPage + 1
+                    self.getTopRatedMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.topRatedPage)")!)
+                }
+            }
+        } else if collectionView.tag == 3 {
+            if indexPath.item == (self.upcomingMoviesViewModel.moviesMain?.results!.count)! - 4 {
+                if ((self.upcomingMoviesViewModel.moviesMain?.page)! <= (self.upcomingMoviesViewModel.moviesMain?.total_pages)!) {
+                    self.upcomingPage = self.upcomingPage + 1
+                    self.getUpcomingMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.upcomingPage)")!)
+                }
+            }
+        }
+    }
+    /*var nowPlayingMoviesViewModel = MoviesMainViewModel()
+    var popularMoviesViewModel = MoviesMainViewModel()
+    var topRatedMoviesViewModel = MoviesMainViewModel()
+    var upcomingMoviesViewModel = MoviesMainViewModel()*/
         
 }
 
