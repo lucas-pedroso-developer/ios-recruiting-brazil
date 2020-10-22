@@ -37,7 +37,7 @@ class MoviesViewController: UIViewController {
             "Top Rated",
             "Lançamentos"
         ]
-        
+                        
         self.getNowPlayingMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.nowPlayingPage)")!)
     }
     
@@ -216,10 +216,5 @@ extension MoviesViewController: UICollectionViewDataSource, UICollectionViewDele
             }
         }
     }
-    /*var nowPlayingMoviesViewModel = MoviesMainViewModel()
-    var popularMoviesViewModel = MoviesMainViewModel()
-    var topRatedMoviesViewModel = MoviesMainViewModel()
-    var upcomingMoviesViewModel = MoviesMainViewModel()*/
-        
 }
 

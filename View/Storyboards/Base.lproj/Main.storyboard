@@ -11,7 +11,7 @@
         <!--Home-->
         <scene sceneID="08I-yA-Yo5">
             <objects>
-                <viewController storyboardIdentifier="MainMoviesViewController" id="wEg-tk-8g3" customClass="MainMoviesViewController" customModule="View" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainMoviesViewController" modalTransitionStyle="flipHorizontal" id="wEg-tk-8g3" customClass="MainMoviesViewController" customModule="View" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K6g-Gs-IbO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

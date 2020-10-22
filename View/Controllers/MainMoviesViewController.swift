@@ -52,11 +52,12 @@ class MainMoviesViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func setGradient() {
-        let gradient: CAGradientLayer = CAGradientLayer()
+        
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
         
+        let gradient: CAGradientLayer = CAGradientLayer()
         gradient.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
         gradient.locations = [0.0 , 1.0]
         gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
