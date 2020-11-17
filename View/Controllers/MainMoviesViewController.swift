@@ -4,7 +4,7 @@ import Kingfisher
 import ViewModel
 import RxSwift
 
-class MainMoviesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class MainMoviesViewController: UIViewController {
     
     var page: Int = 1
     var mainMoviesViewModel = MoviesMainViewModel()
@@ -18,41 +18,39 @@ class MainMoviesViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var categoriesCollectionView: UICollectionView!
     @IBOutlet weak var gradientView: UIView!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setGenresList()
+        setGradient()
+        self.getMovies(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1")!)
+        self.getCategories(url: URL(string: "https://api.themoviedb.org/3/genre/movie/list?api_key=60471ecf5f288a61c69c6592c9d9e1cf")!)
+    }
+    
+    private func setGenresList() {
         self.genresList.append("Action")
         self.genresList.append("Adventure")
         self.genresList.append("Animation")
         self.genresList.append("Comedy")
         self.genresList.append("Crime")
-        
         self.genresList.append("Documentary")
         self.genresList.append("Drama")
         self.genresList.append("Family")
         self.genresList.append("Fantasy")
         self.genresList.append("History")
-        
         self.genresList.append("Horror")
         self.genresList.append("Music")
         self.genresList.append("Mystery")
         self.genresList.append("Romance")
         self.genresList.append("Science Fiction")
-        
         self.genresList.append("TV Movie")
         self.genresList.append("Thriller")
         self.genresList.append("War")
         self.genresList.append("Western")
-        
-        setGradient()
-        
-        self.getMovies(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1")!)
-        self.getCategories(url: URL(string: "https://api.themoviedb.org/3/genre/movie/list?api_key=60471ecf5f288a61c69c6592c9d9e1cf")!)
-        
     }
     
     func setGradient() {
-        
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
@@ -64,6 +62,15 @@ class MainMoviesViewController: UIViewController, UICollectionViewDataSource, UI
         gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
         gradient.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenSize.height*25/100)
         gradientView.layer.insertSublayer(gradient, at: 0)
+        
+        
+        let gradientTab: CAGradientLayer = CAGradientLayer()
+        gradientTab.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
+        gradientTab.locations = [0.0 , 1.0]
+        gradientTab.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradientTab.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientTab.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenSize.height*25/100)        
+        self.tabBarController?.tabBar.layer.insertSublayer(gradientTab, at: 0)
     }
     
     func getMovies(url: URL) {
@@ -91,7 +98,10 @@ class MainMoviesViewController: UIViewController, UICollectionViewDataSource, UI
             onCompleted: { }
         ).disposed(by: disposeBag)
     }
-    
+            
+}
+
+extension MainMoviesViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
@@ -154,6 +164,4 @@ class MainMoviesViewController: UIViewController, UICollectionViewDataSource, UI
         }
         
     }
-    
 }
-

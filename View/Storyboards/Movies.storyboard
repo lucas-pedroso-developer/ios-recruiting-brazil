@@ -15,12 +15,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="Df6-O6-Gt2">
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Df6-O6-Gt2">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="q8R-YS-wJH"/>
                                 </constraints>
-                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textAttributes>
@@ -48,16 +48,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKe-dK-yG1">
-                                                    <rect key="frame" x="8" y="8" width="398" height="32"/>
+                                                    <rect key="frame" x="8" y="8" width="41.5" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="32" id="s99-Pd-Thx"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="19"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QvM-qI-YdI">
-                                                    <rect key="frame" x="8" y="40" width="398" height="162"/>
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QvM-qI-YdI">
+                                                    <rect key="frame" x="8" y="40" width="398" height="156"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vAV-zu-wNe">
                                                         <size key="itemSize" width="161" height="172.5"/>
@@ -67,7 +67,7 @@
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TypeCollectionViewCell" id="GbJ-2U-4dh" customClass="MoviesCollectionViewCell" customModule="View" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="-5.5" width="161" height="172.5"/>
+                                                            <rect key="frame" x="0.0" y="-8.5" width="161" height="172.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                                 <rect key="frame" x="0.0" y="0.0" width="161" height="172.5"/>
@@ -83,7 +83,7 @@
                                                                                     <constraint firstAttribute="height" constant="16" id="TvJ-Zi-Qip"/>
                                                                                 </constraints>
                                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Comedy" translatesAutoresizingMaskIntoConstraints="NO" id="BPX-Sy-zSt">
@@ -123,6 +123,16 @@
                                                         <outlet property="delegate" destination="e2c-SC-hwD" id="stz-h6-kG2"/>
                                                     </connections>
                                                 </collectionView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0hs-X2-Y15">
+                                                    <rect key="frame" x="333" y="12" width="73" height="24"/>
+                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="10"/>
+                                                    <state key="normal" title="Mostrar Mais &gt;">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="showMore:" destination="e2c-SC-hwD" eventType="touchUpInside" id="WCz-gs-vKB"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -130,13 +140,15 @@
                                                 <constraint firstItem="QvM-qI-YdI" firstAttribute="top" secondItem="NKe-dK-yG1" secondAttribute="bottom" id="6bb-bV-L6O"/>
                                                 <constraint firstItem="NKe-dK-yG1" firstAttribute="top" secondItem="L90-d5-Zfn" secondAttribute="top" constant="8" id="9Nf-RM-qtN"/>
                                                 <constraint firstAttribute="trailing" secondItem="QvM-qI-YdI" secondAttribute="trailing" constant="8" id="L4y-09-UZO"/>
+                                                <constraint firstAttribute="trailing" secondItem="0hs-X2-Y15" secondAttribute="trailing" constant="8" id="SKr-JH-SY0"/>
                                                 <constraint firstItem="NKe-dK-yG1" firstAttribute="leading" secondItem="L90-d5-Zfn" secondAttribute="leading" constant="8" id="bTs-hG-q3s"/>
                                                 <constraint firstAttribute="bottom" secondItem="QvM-qI-YdI" secondAttribute="bottom" id="f55-dZ-X03"/>
-                                                <constraint firstAttribute="trailing" secondItem="NKe-dK-yG1" secondAttribute="trailing" constant="8" id="nKg-Th-Qc3"/>
+                                                <constraint firstItem="0hs-X2-Y15" firstAttribute="centerY" secondItem="NKe-dK-yG1" secondAttribute="centerY" id="hwh-WB-D01"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
+                                            <outlet property="showMoreButton" destination="0hs-X2-Y15" id="Z2u-vc-Xo3"/>
                                             <outlet property="typeLabel" destination="NKe-dK-yG1" id="NoJ-9h-FFD"/>
                                             <outlet property="typesCollectionView" destination="QvM-qI-YdI" id="55Z-YL-2z1"/>
                                         </connections>
@@ -149,7 +161,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ETO-mV-y9G"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Rtc-jn-dmB" firstAttribute="leading" secondItem="ETO-mV-y9G" secondAttribute="leading" id="8oU-of-u3u"/>
                             <constraint firstItem="Df6-O6-Gt2" firstAttribute="top" secondItem="ETO-mV-y9G" secondAttribute="top" id="BJK-dG-osN"/>

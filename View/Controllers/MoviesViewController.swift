@@ -16,6 +16,7 @@ class MoviesViewController: UIViewController {
     var upcomingMoviesViewModel = MoviesMainViewModel()
     
     var typesMovies: [String] = []
+    var categories: [String] = []
     var type: String = ""
     var genreId: Int = 0
     
@@ -31,14 +32,37 @@ class MoviesViewController: UIViewController {
         super.viewDidLoad()
         
         navigationBar.topItem?.title = type
+        setGradient()
         self.typesMovies = [
             "Nos Cinemas",
             "Popular",
-            "Top Rated",
+            "Melhores Avaliados",
             "Lançamentos"
+        ]
+        
+        self.categories = [
+            "now_playing",
+            "popular",
+            "top_rated",
+            "upcoming"
         ]
                         
         self.getNowPlayingMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.nowPlayingPage)")!)
+    }
+    
+    func setGradient() {
+        let gradientLayer = CAGradientLayer()
+        var updatedFrame = self.navigationBar.bounds
+        updatedFrame.size.height += UIApplication.shared.statusBarFrame.size.height
+        gradientLayer.frame = updatedFrame        
+        gradientLayer.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0) // Horizontal gradient start
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0) // Horizontal gradient end
+        UIGraphicsBeginImageContext(gradientLayer.bounds.size)
+        gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
     }
     
     func getNowPlayingMoviesViewModel(url: URL) {
@@ -71,7 +95,7 @@ class MoviesViewController: UIViewController {
     func getTopRatedMoviesViewModel(url: URL) {
         self.topRatedMoviesViewModel.get(url: url).subscribe(
             onNext: { result in
-                self.getUpcomingMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1&with_genres=\(self.genreId)&page=\(self.upcomingPage)")!)
+                self.getUpcomingMoviesViewModel(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&with_genres=\(self.genreId)&page=\(self.upcomingPage)")!)
             },
             onError: { error in
                 //self.showAlert(title: "Erro", message: "Ocorreu o seguinte erro - \(error.localizedDescription) ")
@@ -99,6 +123,14 @@ class MoviesViewController: UIViewController {
         self.dismiss(animated: true)
     }
     
+    @IBAction func showMore(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Categories", bundle: nil)
+        let newViewController = storyboard.instantiateViewController(withIdentifier: "CategoriesViewController") as! CategoriesViewController
+        newViewController.genreId = self.genreId
+        newViewController.category = self.categories[sender.tag]
+        newViewController.type = self.typesMovies[sender.tag]
+        present(newViewController, animated: true, completion: nil)
+    }
 }
 
 extension MoviesViewController: UITableViewDelegate, UITableViewDataSource {
@@ -114,7 +146,8 @@ extension MoviesViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TypeViewCell", for: indexPath) as! TypesCollectionViewCell
         cell.typeLabel.text = self.typesMovies[indexPath.row]
         cell.typesCollectionView.tag = indexPath.row
-                
+        cell.showMoreButton.tag = indexPath.row
+        
         self.row = indexPath.row
                         
         DispatchQueue.main.async {
@@ -124,7 +157,9 @@ extension MoviesViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("eae")
+    }
 }
 
 extension MoviesViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
