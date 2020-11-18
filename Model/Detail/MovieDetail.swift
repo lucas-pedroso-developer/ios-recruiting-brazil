@@ -1,18 +1,18 @@
 import Foundation
 
-public struct MovieDetail: Model {
-    let backdrop_path: String?
-    let genres: [Genres]?
-    let homepage: String?
-    let id: Int?
-    let original_title: String?
-    let overview: String?
-    let poster_path: String?
-    let release_date: String?
-    let title: String?
-    let vote_average: Double?
+public struct MovieDetail: Model {        
+    public let backdrop_path: String?
+    public let genres: [MovieGenres]?
+    public let homepage: String?
+    public let id: Int?
+    public let original_title: String?
+    public let overview: String?
+    public let poster_path: String?
+    public let release_date: String?
+    public let title: String?
+    public let vote_average: Double?
     
-    public init() {
+    public init(backdrop_path: String?, genres: [MovieGenres]?, homepage: String?, id: Int?, original_title: String?, overview: String?, poster_path: String?, release_date: String?, title: String?, vote_average: Double?) {
         self.backdrop_path = backdrop_path
         self.genres = genres
         self.homepage = homepage

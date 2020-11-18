@@ -155,6 +155,12 @@ extension MainMoviesViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView.tag == 1 {
+            let storyboard = UIStoryboard(name: "Detail", bundle: nil)
+            let newViewController = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+            newViewController.movieId = self.mainMoviesViewModel.moviesMain?.results![indexPath.item].id
+            present(newViewController, animated: true, completion: nil)
+        }
         if collectionView.tag == 2 {
             let storyboard = UIStoryboard(name: "Movies", bundle: nil)
             let newViewController = storyboard.instantiateViewController(withIdentifier: "MoviesViewController") as! MoviesViewController

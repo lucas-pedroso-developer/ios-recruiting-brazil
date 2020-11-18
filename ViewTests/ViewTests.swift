@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import View
+//@testable import View
 
 class ViewTests: XCTestCase {
 
