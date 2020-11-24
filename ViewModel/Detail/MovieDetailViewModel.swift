@@ -8,7 +8,7 @@ public class MovieDetailViewModel {
     
     public var movieDetail: MovieDetail?
     
-    let service = HttpService()
+    let service = makeHttpService()
     
     public init() { }
     

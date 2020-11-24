@@ -7,8 +7,8 @@ import RxSwift
 class MainMoviesViewController: UIViewController {
     
     var page: Int = 1
-    var mainMoviesViewModel = MoviesMainViewModel()
-    var categoriesViewModel = CategoriesViewModel()
+    var mainMoviesViewModel = makeMoviesMainViewModel()
+    var categoriesViewModel = makeCategoriesViewModelFactory()
     var moviesArrayFiltered: [[String:String]] = []
     var disposeBag = DisposeBag()
     var genresList: [String] = []    
@@ -18,13 +18,18 @@ class MainMoviesViewController: UIViewController {
     @IBOutlet weak var categoriesCollectionView: UICollectionView!
     @IBOutlet weak var gradientView: UIView!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setGenresList()
         setGradient()
         self.getMovies(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1")!)
+        
+        /*self.mainMoviesViewModel.bindMoviesViewModelToController = {
+            //print(self.mainMoviesViewModel.moviesData)
+            self.collectionView.reloadData()
+            //self.getMovies(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=1")!)
+        }*/
+        
         self.getCategories(url: URL(string: "https://api.themoviedb.org/3/genre/movie/list?api_key=60471ecf5f288a61c69c6592c9d9e1cf")!)
     }
     
@@ -51,25 +56,26 @@ class MainMoviesViewController: UIViewController {
     }
     
     func setGradient() {
-        let screenSize = UIScreen.main.bounds
+        /*let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
+        let screenHeight = screenSize.height*/
         
-        let gradient: CAGradientLayer = CAGradientLayer()
-        gradient.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
+        //let gradient: CAGradientLayer = CAGradientLayer()
+        /*gradient.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
         gradient.locations = [0.0 , 1.0]
         gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
         gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
-        gradient.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenSize.height*25/100)
+        gradient.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenSize.height*25/100)*/
+        let gradient = self.makeGradient()
         gradientView.layer.insertSublayer(gradient, at: 0)
         
         
-        let gradientTab: CAGradientLayer = CAGradientLayer()
-        gradientTab.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
+        let gradientTab = self.makeGradient()
+        /*gradientTab.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
         gradientTab.locations = [0.0 , 1.0]
         gradientTab.startPoint = CGPoint(x: 0.0, y: 1.0)
         gradientTab.endPoint = CGPoint(x: 1.0, y: 1.0)
-        gradientTab.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenSize.height*25/100)        
+        gradientTab.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenSize.height*25/100)*/
         self.tabBarController?.tabBar.layer.insertSublayer(gradientTab, at: 0)
     }
     
@@ -103,26 +109,14 @@ class MainMoviesViewController: UIViewController {
 
 extension MainMoviesViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
-        if collectionView.tag == 1 {
-            return CGSize(width: screenWidth*34/100, height: screenHeight*30/100)
-        } else if collectionView.tag == 2 {
-            return CGSize(width: screenWidth*45/100, height: screenHeight*15/100)
-        }
-        return CGSize(width: 0, height: 0)
+        self.mainMoviesViewModel.cellSize(collectionView: collectionView)
     }
             
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 1 {
-            if self.mainMoviesViewModel.moviesMain != nil {
-                return (self.mainMoviesViewModel.moviesMain?.results!.count)!
-            }
-        } else if collectionView.tag == 2 {
-            if self.categoriesViewModel.categories != nil {
-                return (self.categoriesViewModel.categories?.genres!.count)!
-            }
+            return self.mainMoviesViewModel.numberOfRows(collectionView: collectionView)
+        } else if collectionView.tag == 2 {
+            return self.categoriesViewModel.numberOfRows(collectionView: collectionView)
         }
         return 0
     }
@@ -130,9 +124,9 @@ extension MainMoviesViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MoviesCollectionViewCell
         if collectionView.tag == 1 {
-            cell.label.text = self.mainMoviesViewModel.moviesMain?.results![indexPath.item].title!
-            if let url = self.mainMoviesViewModel.moviesMain?.results![indexPath.item].backdrop_path {
-                cell.image.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500" + url))
+            cell.label.text = self.mainMoviesViewModel.getTitle(indexPath: indexPath.item)
+            if let url = self.mainMoviesViewModel.getImage(indexPath: indexPath.item)  {
+                cell.image.kf.setImage(with: url)
             }
             cell.image.layer.cornerRadius = UIScreen.main.bounds.width*3/100
         } else if collectionView.tag == 2 {
@@ -145,11 +139,9 @@ extension MainMoviesViewController: UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if collectionView.tag == 1 {
-            if indexPath.item == (self.mainMoviesViewModel.moviesMain?.results!.count)! - 4 { // - 4 &&
-                    if ((self.mainMoviesViewModel.moviesMain?.page)! <= (self.mainMoviesViewModel.moviesMain?.total_pages)!) {
-                            self.page = self.page + 1
-                            self.getMovies(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=\(self.page)")!)
-                    }
+            if self.mainMoviesViewModel.nextPage(indexPath: indexPath) {
+                self.page = self.page + 1
+                self.getMovies(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=\(self.page)")!)
             }
         }
     }
@@ -158,7 +150,7 @@ extension MainMoviesViewController: UICollectionViewDataSource, UICollectionView
         if collectionView.tag == 1 {
             let storyboard = UIStoryboard(name: "Detail", bundle: nil)
             let newViewController = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-            newViewController.movieId = self.mainMoviesViewModel.moviesMain?.results![indexPath.item].id
+            newViewController.movieId = self.mainMoviesViewModel.getMovieId(indexPath: indexPath.item)
             present(newViewController, animated: true, completion: nil)
         }
         if collectionView.tag == 2 {

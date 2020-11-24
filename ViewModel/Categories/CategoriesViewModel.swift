@@ -8,12 +8,17 @@ public class CategoriesViewModel {
         
     public var categories: Categories?
         
-    let service = HttpService()
+    let service = makeHttpService()
     
     public init() { }
     
-    public func numberOfRows(searchIsActive: Bool) -> Int {
-        return (categories?.genres!.count)!
+    public func numberOfRows(collectionView: UICollectionView) -> Int {        
+        if self.categories != nil {
+            if let count = self.categories?.genres!.count {
+                return count
+            } 
+        }
+        return 0
     }
     
     public func cellSize(collectionView: UICollectionView) -> CGSize {

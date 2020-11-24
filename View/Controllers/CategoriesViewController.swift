@@ -12,7 +12,7 @@ class CategoriesViewController: UIViewController {
     var type: String = ""
     var genreId: Int = 0
     var disposeBag = DisposeBag()
-    var moviesViewModel = MoviesMainViewModel()
+    var moviesViewModel = makeMoviesMainViewModel()
             
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var navigationBar: UINavigationBar!
@@ -26,13 +26,10 @@ class CategoriesViewController: UIViewController {
     }
     
     func setGradient() {
-        let gradientLayer = CAGradientLayer()
+        let gradientLayer = makeGradient()
         var updatedFrame = self.navigationBar.bounds
         updatedFrame.size.height += UIApplication.shared.statusBarFrame.size.height
         gradientLayer.frame = updatedFrame
-        gradientLayer.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0) // Horizontal gradient start
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0) // Horizontal gradient end
         UIGraphicsBeginImageContext(gradientLayer.bounds.size)
         gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -67,9 +64,9 @@ extension CategoriesViewController: UICollectionViewDataSource, UICollectionView
     }
             
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            if self.moviesViewModel.moviesMain != nil {
-                return (self.moviesViewModel.moviesMain?.results!.count)!
-            }
+        if self.moviesViewModel.moviesMain != nil {
+            return (self.moviesViewModel.moviesMain?.results!.count)!
+        }
         return 0
     }
     

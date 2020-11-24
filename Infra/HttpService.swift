@@ -1,7 +1,7 @@
 import Foundation
 import Alamofire
 
-public class HttpService {
+public class HttpService: HttpGetProtocol {
     
     private let session : Session
     

@@ -3,4 +3,70 @@
    uuid = "ABCFF7B4-8964-432A-848F-0DFA1AB6317E"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "47D532B6-ED07-4516-BCA4-CBAC0CA7CCA2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "View/Controllers/MainMoviesViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5AA2BBEA-49E1-4721-BE7C-BA7DD35200BB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "View/Controllers/MainMoviesViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5AA2BBEA-49E1-4721-BE7C-BA7DD35200BB - d772a7ae9de3e1c8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "View.MainMoviesViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "View"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucasdaniel/Desktop/Concrete/ios-recruiting-brazil/View/Controllers/MainMoviesViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "549">
+               </Location>
+               <Location
+                  uuid = "5AA2BBEA-49E1-4721-BE7C-BA7DD35200BB - 61677689250dcd8a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in View.MainMoviesViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "View"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucasdaniel/Desktop/Concrete/ios-recruiting-brazil/View/Controllers/MainMoviesViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

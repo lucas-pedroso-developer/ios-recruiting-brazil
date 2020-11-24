@@ -7,7 +7,7 @@ import Kingfisher
 class DetailViewController: UIViewController {
     
     var movieId: Int?
-    var movieDetailViewModel = MovieDetailViewModel()
+    var movieDetailViewModel = makeMovieDetailViewModel()
     var disposeBag = DisposeBag()
     var genres: [String] = []
     
@@ -24,14 +24,12 @@ class DetailViewController: UIViewController {
         self.getMovieDetail(url: URL(string: "https://api.themoviedb.org/3/movie/\(movieId!)?api_key=60471ecf5f288a61c69c6592c9d9e1cf")!)
         
     }
+    
     func setGradient() {
-        let gradientLayer = CAGradientLayer()
+        let gradientLayer = makeGradient()
         var updatedFrame = self.navigationBar.bounds
         updatedFrame.size.height += UIApplication.shared.statusBarFrame.size.height
         gradientLayer.frame = updatedFrame
-        gradientLayer.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0) // Horizontal gradient start
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0) // Horizontal gradient end
         UIGraphicsBeginImageContext(gradientLayer.bounds.size)
         gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
