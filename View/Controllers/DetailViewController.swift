@@ -2,9 +2,8 @@ import Foundation
 import UIKit
 import ViewModel
 import RxSwift
-import Kingfisher
 
-class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController {
     
     var movieId: Int?
     var movieDetailViewModel = makeMovieDetailViewModel()
@@ -21,74 +20,66 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setGradient()
-        self.getMovieDetail(url: URL(string: "https://api.themoviedb.org/3/movie/\(movieId!)?api_key=60471ecf5f288a61c69c6592c9d9e1cf")!)
-        
+        if let id = movieId {
+            if let url = buildURL(withPathExtension: "\(Movies.movie)", movieId: "\(id)") {
+                getMovieDetail(url: url)
+            }
+        }
     }
     
     func setGradient() {
         let gradientLayer = makeGradient()
-        var updatedFrame = self.navigationBar.bounds
+        var updatedFrame = navigationBar.bounds
         updatedFrame.size.height += UIApplication.shared.statusBarFrame.size.height
         gradientLayer.frame = updatedFrame
         UIGraphicsBeginImageContext(gradientLayer.bounds.size)
         gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
+        navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
     }
     
     func getMovieDetail(url: URL) {
-        self.movieDetailViewModel.getDetail(url: url).subscribe(
+        movieDetailViewModel.getDetail(url: url).subscribe(
             onNext: { result in
-                //self.collectionView.reloadData()
-                self.titleLabel.text = self.movieDetailViewModel.movieDetail?.title!
-                self.synopseTextView.text = self.movieDetailViewModel.movieDetail?.overview!
-                if let url = self.movieDetailViewModel.movieDetail?.backdrop_path {
-                    self.movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500" + url))
-                }
-                if let genres = self.movieDetailViewModel.movieDetail?.genres {
-                    for genre in genres {
-                        self.genres.append(genre.name!)
+                DispatchQueue.main.async {
+                    self.titleLabel.text = self.movieDetailViewModel.movieDetail?.title!
+                    self.synopseTextView.text = self.movieDetailViewModel.movieDetail?.overview!
+                    if let url = self.movieDetailViewModel.movieDetail?.backdrop_path {
+                        self.movieImageView.downloadImage(from: url)
                     }
+                    if let genres = self.movieDetailViewModel.movieDetail?.genres {
+                        for genre in genres {
+                            self.genres.append(genre.name!)
+                        }
+                    }
+                    self.collectionView.reloadData()
                 }
-                self.collectionView.reloadData()
-                
             },
             onError: { error in
-                //self.showAlert(title: "Erro", message: "Ocorreu o seguinte erro - \(error.localizedDescription) ")
-                print(error.localizedDescription)
+                self.showAlert(title: Constants.erro, message: "\(Constants.error_ocurred) \(error.localizedDescription) ")
             },
             onCompleted: { }
         ).disposed(by: disposeBag)
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
 extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
-        return CGSize(width: screenWidth*12/100, height: screenHeight*27/100)
-    }*/
-            
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.genres.count
+        return genres.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GenresCell
-        cell.nameLabel.text = self.genres[indexPath.item]
+        cell.nameLabel.text = genres[indexPath.item]
         cell.nameLabel.layer.borderColor = UIColor.black.cgColor
         cell.nameLabel.layer.borderWidth = 1
         cell.nameLabel.layer.cornerRadius = 5
         return cell
-    }
-    
-    
-    
+    }    
 }
 

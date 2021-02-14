@@ -4,14 +4,12 @@ import Infra
 import UIKit
 import RxSwift
 
-public class MoviesMainViewModel {
+public final class MoviesMainViewModel {
         
     public var resultsArray: [MoviesResult]?
     public var movieToSearch: String = ""
     public var moviesMain: MoviesMain?
-    
-    let service = makeHttpService()
-    
+            
     private(set) var moviesData : MoviesMain! {
         didSet {
             self.bindMoviesViewModelToController()
@@ -22,21 +20,21 @@ public class MoviesMainViewModel {
     public init() { }
     
     public func getMovieId(indexPath: Int) -> Int {
-        if let id = self.moviesMain?.results![indexPath].id {
+        if let id = moviesMain?.results?[indexPath].id {
             return id
         }
         return 0
     }
     
     public func getTitle(indexPath: Int) -> String {
-        if let title = self.moviesMain?.results![indexPath].title {
+        if let title = moviesMain?.results?[indexPath].title {
             return title
         }
         return "No name"
     }
     
     public func getImage(indexPath: Int) -> URL? {
-        if let backdrop_path = self.moviesMain?.results![indexPath].backdrop_path {
+        if let backdrop_path = moviesMain?.results?[indexPath].backdrop_path {
             if let url = URL(string: "https://image.tmdb.org/t/p/w500" + backdrop_path) {
                 return url
             }
@@ -45,8 +43,8 @@ public class MoviesMainViewModel {
     }
     
     public func nextPage(indexPath: IndexPath) -> Bool {
-        if indexPath.item == (self.moviesMain?.results!.count)! - 4 {
-            if ((self.moviesMain?.page)! <= (self.moviesMain?.total_pages)!) {
+        if indexPath.item == (moviesMain?.results?.count)! - 4 {
+            if ((moviesMain?.page)! <= (moviesMain?.total_pages)!) {
                 return true
             }
         }
@@ -54,8 +52,8 @@ public class MoviesMainViewModel {
     }
     
     public func numberOfRows(collectionView: UICollectionView) -> Int {
-        if self.moviesMain != nil {
-            if let count = self.moviesMain?.results!.count {
+        if moviesMain != nil {
+            if let count = moviesMain?.results!.count {
                 return count
             }
         }
@@ -75,37 +73,35 @@ public class MoviesMainViewModel {
     }
         
     public func get(url: URL) -> Observable<(Result<MoviesMain?, HttpError>)> {
-        return Observable.create { observer in
-            self.service.get(url: url) { result in
+        return Observable.create { observer in            
+            HttpService.shared.get(url: url) { result in
                 switch result {
                 case .success(let data):
-                    if data != nil {
-                        do {
-                            let results = try JSONDecoder().decode(MoviesMain.self, from: data!)
-                            print(results)
-                            if self.moviesMain == nil {
-                            //if self.moviesData == nil {
-                                self.moviesMain = results
-                                //self.moviesData = results
-                                observer.onNext(.success(self.moviesMain))
-                                //observer.onNext(.success(self.moviesData))
-                            } else {
-                                self.moviesMain?.results?.append(contentsOf: results.results!)
-                                //self.moviesData?.results?.append(contentsOf: results.results!)
-                                observer.onNext(.success(self.moviesMain))
-                                //observer.onNext(.success(self.moviesData))
-                            }
-                        } catch(let error) {
-                            observer.onNext(.failure(.noConnectivity))
-                        }
+                    guard let data = data else {
+                        observer.onNext(.failure(.noConnectivity))
+                        return
+                    }
+                    if let results = ViewModelHelper.decode(modelType: MoviesMain.self, data: data) {
+                        self.setMoviesMain(results: results)
+                        observer.onNext(.success(self.moviesMain))
                     } else {
                         observer.onNext(.failure(.noConnectivity))
                     }
-                case .failure(let error):
+                case .failure( _):
                     observer.onNext(.failure(.noConnectivity))
                 }
             }
             return Disposables.create()
+        }
+    }
+    
+    private func setMoviesMain(results: MoviesMain?) {
+        if self.moviesMain == nil {
+            moviesMain = results
+        } else {
+            if let result = results?.results {
+                moviesMain?.results?.append(contentsOf: result)
+            }
         }
     }
      

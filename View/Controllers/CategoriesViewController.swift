@@ -1,11 +1,9 @@
 import Foundation
 import UIKit
-import Kingfisher
 import ViewModel
 import RxSwift
 
-
-class CategoriesViewController: UIViewController {
+final class CategoriesViewController: UIViewController {
     
     var page: Int = 0
     var category: String = ""
@@ -21,37 +19,39 @@ class CategoriesViewController: UIViewController {
         super.viewDidLoad()
         navigationBar.topItem?.title = type
         setGradient()
-        self.getMovies(url: URL(string: "https://api.themoviedb.org/3/movie/\(category)?api_key=60471ecf5f288a61c69c6592c9d9e1cf&with_genres=\(self.genreId)&page=1")!)
-        
+        if let url = buildURL(withPathExtension: "\(Movies.movie)/\(category)", page: "1", with_genres: "\(self.genreId)") {
+            getMovies(url: url)
+        }
     }
     
     func setGradient() {
         let gradientLayer = makeGradient()
-        var updatedFrame = self.navigationBar.bounds
+        var updatedFrame = navigationBar.bounds
         updatedFrame.size.height += UIApplication.shared.statusBarFrame.size.height
         gradientLayer.frame = updatedFrame
         UIGraphicsBeginImageContext(gradientLayer.bounds.size)
         gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
+        navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
     }
     
     func getMovies(url: URL) {
-        self.moviesViewModel.get(url: url).subscribe(
+        moviesViewModel.get(url: url).subscribe(
             onNext: { result in
-                self.collectionView.reloadData()
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }                
             },
             onError: { error in
-                //self.showAlert(title: "Erro", message: "Ocorreu o seguinte erro - \(error.localizedDescription) ")
-                print(error.localizedDescription)
+                self.showAlert(title: Constants.erro, message: "\(Constants.error_ocurred) \(error.localizedDescription) ")
             },
             onCompleted: { }
         ).disposed(by: disposeBag)
     }
     
     @IBAction func back(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -64,27 +64,31 @@ extension CategoriesViewController: UICollectionViewDataSource, UICollectionView
     }
             
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if self.moviesViewModel.moviesMain != nil {
-            return (self.moviesViewModel.moviesMain?.results!.count)!
+        if moviesViewModel.moviesMain != nil {
+            return (moviesViewModel.moviesMain?.results!.count)!
         }
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MoviesCollectionViewCell
-            cell.label.text = self.moviesViewModel.moviesMain?.results![indexPath.item].title!
-            if let url = self.moviesViewModel.moviesMain?.results![indexPath.item].backdrop_path {
-                cell.image.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500" + url))
+            cell.label.text = moviesViewModel.moviesMain?.results![indexPath.item].title!
+            if let backdropPath = moviesViewModel.moviesMain?.results![indexPath.item].backdrop_path {
+                if let url = URL(string: "\(Constants.APIImage)\(backdropPath)") {
+                    cell.image.downloadImage(from: url)
+                }
             }
             cell.image.layer.cornerRadius = UIScreen.main.bounds.width*3/100
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-            if indexPath.item == (self.moviesViewModel.moviesMain?.results!.count)! - 4 { // - 4 &&
-                    if ((self.moviesViewModel.moviesMain?.page)! <= (self.moviesViewModel.moviesMain?.total_pages)!) {
-                            self.page = self.page + 1
-                            self.getMovies(url: URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=60471ecf5f288a61c69c6592c9d9e1cf&page=\(self.page)")!)
+            if indexPath.item == (moviesViewModel.moviesMain?.results!.count)! - 4 { // - 4 &&
+                    if ((moviesViewModel.moviesMain?.page)! <= (moviesViewModel.moviesMain?.total_pages)!) {
+                            page = page + 1                        
+                        if let url = buildURL(withPathExtension: "\(Movies.movie)/\(category)", page: "\(page)") {
+                            getMovies(url: url)
+                        }
                     }
             }        
     }

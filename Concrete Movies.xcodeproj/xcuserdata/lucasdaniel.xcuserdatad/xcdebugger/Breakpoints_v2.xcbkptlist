@@ -7,65 +7,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "47D532B6-ED07-4516-BCA4-CBAC0CA7CCA2"
+            uuid = "CE85ED6C-2B4B-4D8A-B299-A444A4FA625D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "View/Controllers/MainMoviesViewController.swift"
+            filePath = "ViewModel/ViewModelHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "decodeModels(data:model:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5AA2BBEA-49E1-4721-BE7C-BA7DD35200BB"
+            uuid = "13633F7C-59D1-42AB-8528-9866AEA6E5A4"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "View/Controllers/MainMoviesViewController.swift"
+            filePath = "View/Controllers/DetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "getMovieDetail(url:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "5AA2BBEA-49E1-4721-BE7C-BA7DD35200BB - d772a7ae9de3e1c8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "View.MainMoviesViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "View"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lucasdaniel/Desktop/Concrete/ios-recruiting-brazil/View/Controllers/MainMoviesViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "29"
-                  endingLineNumber = "29"
-                  offsetFromSymbolStart = "549">
-               </Location>
-               <Location
-                  uuid = "5AA2BBEA-49E1-4721-BE7C-BA7DD35200BB - 61677689250dcd8a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in View.MainMoviesViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "View"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lucasdaniel/Desktop/Concrete/ios-recruiting-brazil/View/Controllers/MainMoviesViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "52">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

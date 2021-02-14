@@ -4,17 +4,15 @@ import Infra
 import UIKit
 import RxSwift
 
-public class CategoriesViewModel {
+public final class CategoriesViewModel {
         
     public var categories: Categories?
-        
-    let service = makeHttpService()
-    
+               
     public init() { }
     
     public func numberOfRows(collectionView: UICollectionView) -> Int {        
         if self.categories != nil {
-            if let count = self.categories?.genres!.count {
+            if let count = categories?.genres?.count {
                 return count
             } 
         }
@@ -29,21 +27,17 @@ public class CategoriesViewModel {
         
     public func getCategories(url: URL) -> Observable<(Result<Categories?, HttpError>)> {
         return Observable.create { observer in
-            self.service.get(url: url) { result in
+            HttpService.shared.get(url: url) { result in
                 switch result {
                 case .success(let data):
-                    if data != nil {
-                        do {
-                            let results = try JSONDecoder().decode(Categories.self, from: data!)
-                                self.categories = results
-                                observer.onNext(.success(self.categories))
-                        } catch(let error) {
-                            observer.onNext(.failure(.noConnectivity))
-                        }
-                    } else {
+                    guard let data = data else {
                         observer.onNext(.failure(.noConnectivity))
+                        return
                     }
-                case .failure(let error):
+                    let results = ViewModelHelper.decode(modelType: Categories.self, data: data)
+                    self.categories = results
+                    observer.onNext(.success(self.categories))
+                case .failure(let _):
                     observer.onNext(.failure(.noConnectivity))
                 }
             }
